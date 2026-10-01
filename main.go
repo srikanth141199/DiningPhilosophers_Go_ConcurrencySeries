@@ -72,11 +72,18 @@ func diningProblem(p Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex,
 
 	for i := hunger; i > 0; i-- {
 		//get the lock on both forks
-		forks[p.rightFork].Lock()
-		fmt.Printf("%s picked up right fork %d\n", p.name, p.rightFork)
 
-		forks[p.leftFork].Lock()
-		fmt.Printf("%s picked up left fork %d\n", p.name, p.leftFork)
+		if p.leftFork > p.rightFork {
+			forks[p.leftFork].Lock()
+			fmt.Printf("%s picked up left fork %d\n", p.name, p.leftFork)
+			forks[p.rightFork].Lock()
+			fmt.Printf("%s picked up right fork %d\n", p.name, p.rightFork)
+		} else {
+			forks[p.rightFork].Lock()
+			fmt.Printf("%s picked up right fork %d\n", p.name, p.rightFork)
+			forks[p.leftFork].Lock()
+			fmt.Printf("%s picked up left fork %d\n", p.name, p.leftFork)
+		}
 
 		fmt.Printf("%s is eating\n", p.name)
 		time.Sleep(eatTime)
@@ -86,6 +93,7 @@ func diningProblem(p Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex,
 
 		forks[p.rightFork].Unlock()
 		fmt.Printf("%s put down right fork %d\n", p.name, p.rightFork)
+
 		forks[p.leftFork].Unlock()
 		fmt.Printf("%s put down left fork %d\n", p.name, p.leftFork)
 
