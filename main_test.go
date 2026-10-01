@@ -16,8 +16,8 @@ func Test_dine(t *testing.T) {
 		orderFinished = []string{}
 		dine()
 		// Check that all philosophers have finished eating
-		if len(orderFinished) != len(philosophers) {
-			t.Errorf("Expected %d philosophers to finish eating, but got %d", len(philosophers), len(orderFinished))
+		if len(orderFinished) != 5 {
+			t.Errorf("Expected %d philosophers to finish eating, but got %d", 5, len(orderFinished))
 		}
 	}
 }
